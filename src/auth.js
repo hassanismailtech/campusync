@@ -27,3 +27,19 @@ export async function bootstrapProfile({ fullName, department, level }) {
   const { error } = await supabase.rpc('bootstrap_student_profile', { profile_name: fullName, profile_college: 'Lagos State University', profile_campus: 'Ikeja Campus', profile_department: department, profile_level: level });
   if (error) throw error;
 }
+
+export async function getOrganizationsAndSubscriptions() {
+  if (!supabase) return { organizations: [], subscriptions: [] };
+  const user = await getCurrentUser();
+  if (!user) return { organizations: [], subscriptions: [] };
+  const [{ data: organizations, error: organizationsError }, { data: subscriptions, error: subscriptionsError }] = await Promise.all([supabase.from('organizations').select('id,name,category,type,default_for_all').order('name'), supabase.from('organization_subscriptions').select('organization_id,automatic')]);
+  if (organizationsError || subscriptionsError) throw organizationsError || subscriptionsError;
+  return { organizations: organizations || [], subscriptions: subscriptions || [] };
+}
+
+export async function updateSubscription(organizationId, subscribed) {
+  const user = await getCurrentUser();
+  if (!supabase || !user) throw new Error('Sign in to manage subscriptions.');
+  if (subscribed) { const { error } = await supabase.from('organization_subscriptions').insert({ user_id: user.id, organization_id: organizationId, automatic: false }); if (error && error.code !== '23505') throw error; return; }
+  const { error } = await supabase.from('organization_subscriptions').delete().eq('user_id', user.id).eq('organization_id', organizationId).eq('automatic', false); if (error) throw error;
+}

@@ -1,6 +1,6 @@
 import './style.css';
 import { notices as initialNotices, exams, organizations, categories } from './data.js';
-import { signInWithGoogle, sendMagicLink } from './auth.js';
+import { signInWithGoogle, sendMagicLink, getCurrentUser, bootstrapProfile } from './auth.js';
 
 const app = document.querySelector('#app');
 let notices = [...initialNotices, ...JSON.parse(localStorage.getItem('campusync-drafts') || '[]')];
@@ -55,9 +55,13 @@ function renderWorkspace() {
   workspace.querySelector('[data-return-landing]').addEventListener('click', () => { workspace.hidden = true; document.querySelector('.landing').hidden = false; });
   workspace.querySelector('[data-sign-in]').addEventListener('click', openSignIn);
   renderView();
+  hydrateIdentity();
 }
 
+async function hydrateIdentity(){const user=await getCurrentUser();const button=document.querySelector('[data-sign-in]');if(!user||!button)return;button.textContent=(user.user_metadata?.full_name||user.email||'Profile').split(' ')[0];button.onclick=()=>openProfile(user);}
+
 function openSignIn(){const dialog=document.createElement('div');dialog.className='modal';dialog.innerHTML=`<div class="modal-card"><button class="close">×</button><p class="eyebrow"><i></i> Your CampusSync profile</p><h2>Sign in to personalise your feed</h2><button class="button primary wide" data-google>Continue with Google</button><p class="auth-or">or receive a secure email link</p><form data-email><input type="email" placeholder="you@example.com" required /><button class="button ghost wide">Send magic link</button></form></div>`;document.body.append(dialog);dialog.querySelector('.close').onclick=()=>dialog.remove();dialog.querySelector('[data-google]').onclick=async()=>{try{await signInWithGoogle()}catch(e){toast(e.message)}};dialog.querySelector('[data-email]').onsubmit=async(e)=>{e.preventDefault();try{await sendMagicLink(e.currentTarget.querySelector('input').value);toast('Check your email for the secure sign-in link.');dialog.remove()}catch(error){toast(error.message)}};}
+function openProfile(user){const dialog=document.createElement('div');dialog.className='modal';dialog.innerHTML=`<div class="modal-card"><button class="close">×</button><p class="eyebrow"><i></i> Make CampusSync yours</p><h2>Complete your profile</h2><p>Your official sources are subscribed automatically. Pick your department and level for a relevant feed.</p><form data-profile><input name="name" value="${escapeHtml(user.user_metadata?.full_name||'')}" placeholder="Your name" required /><select name="department"><option>Medicine</option><option>Dentistry</option><option>Pharmacy</option><option>Medical Laboratory Science</option><option>Nursing Science</option><option>Physiotherapy</option><option>Radiography</option></select><select name="level"><option>100L</option><option>200L</option><option>300L</option><option>400L</option><option>500L</option><option>600L</option></select><button class="button primary wide">Save profile</button></form></div>`;document.body.append(dialog);dialog.querySelector('.close').onclick=()=>dialog.remove();dialog.querySelector('[data-profile]').onsubmit=async(e)=>{e.preventDefault();const f=new FormData(e.currentTarget);try{await bootstrapProfile({fullName:f.get('name'),department:f.get('department'),level:f.get('level')});toast('Profile saved. Official feeds are now subscribed.');dialog.remove()}catch(error){toast(error.message)}};}
 
 function viewTitle() { return ({ home: 'Good morning, Hassan.', notices: currentCategory === 'All' ? 'All notices' : `${currentCategory} notices`, exams: 'Exam tracker', directory: 'Organization directory' })[currentView]; }
 function changeView(view) { currentView = view; renderWorkspace(); }

@@ -15,3 +15,15 @@ export async function sendMagicLink(email) {
   const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin } });
   if (error) throw error;
 }
+
+export async function getCurrentUser() {
+  if (!supabase) return null;
+  const { data } = await supabase.auth.getUser();
+  return data.user || null;
+}
+
+export async function bootstrapProfile({ fullName, department, level }) {
+  if (!supabase) throw new Error('Sign-in is not configured yet.');
+  const { error } = await supabase.rpc('bootstrap_student_profile', { profile_name: fullName, profile_college: 'Lagos State University', profile_campus: 'Ikeja Campus', profile_department: department, profile_level: level });
+  if (error) throw error;
+}

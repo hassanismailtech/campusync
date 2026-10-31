@@ -22,4 +22,3 @@ Then open the local address shown in the terminal.
 GitHub is the source of truth. Use Vercel for the public app and trusted API boundary, and a separately authenticated DigitalOcean service for Gemma 4 inference. Keep `GEMMA_ENDPOINT`, `GEMMA_API_KEY`, and `GEMMA_MODEL` only in deployment secrets—never in this repository or the browser.
 
 See [product contract](docs/PRODUCT_CONTRACT.md), [architecture](docs/ARCHITECTURE.md), and [delivery gates](docs/DELIVERY.md).
-# campusync

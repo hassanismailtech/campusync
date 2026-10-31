@@ -3,55 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#071615" />
-    <title>CampusSync — Every notice, made actionable.</title>
+    <meta name="theme-color" content="#053f42" />
+    <meta name="description" content="CampusSync keeps LASUCOM notices, exams, and campus communities in one trusted space." />
+    <title>CampusSync — campus, finally in sync</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div class="noise"></div>
-    <div class="app-shell">
-      <header class="topbar">
-        <a class="brand" href="#top" aria-label="CampusSync home"><span class="brand-mark">C</span><span>campus<span>sync</span></span></a>
-        <nav><a href="#how">How it works</a><a href="#feed">Your feed</a><a href="#about">Why CampusSync</a></nav>
-        <button class="text-button" id="resetButton">Reset demo <span>↻</span></button>
-      </header>
-
-      <main id="top">
-        <section class="hero">
-          <div class="eyebrow"><i></i> LASUCOM EDITION · BUILT FOR THE NOTICEBOARD</div>
-          <h1>Nothing important<br /><em>gets lost.</em></h1>
-          <p class="hero-copy">Turn any campus flyer or broadcast into a verified, calendar-ready action — before it disappears in the group chat.</p>
-          <div class="hero-actions"><a class="button primary" href="#capture">Sync a notice <span>↓</span></a><button class="button quiet" id="playDemo">Watch 30 sec demo <span class="play">▶</span></button></div>
-          <div class="hero-proof"><span class="avatar-stack"><b>F</b><b>A</b><b>T</b><b>+</b></span><span>Made for the students who keep campus moving.</span></div>
-          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="pulse-dot d-one"></div><div class="pulse-dot d-two"></div>
-        </section>
-
-        <section class="capture-grid" id="capture">
-          <div class="capture-intro"><div class="section-kicker">01 / CAPTURE</div><h2>Drop the chaos.<br /><em>Keep the detail.</em></h2><p>No screenshots buried in chat. No second-guessing a date. CampusSync reads the notice, preserves its proof, and gives you the next step.</p></div>
-          <div class="capture-panel">
-            <div class="panel-top"><span>NEW NOTICE</span><span class="secure"><i></i> PRIVATE BY DESIGN</span></div>
-            <div class="input-tabs"><button class="tab active" data-tab="text">Paste broadcast</button><button class="tab" data-tab="upload">Upload flyer</button></div>
-            <div class="paste-view" id="textView"><textarea id="noticeText" maxlength="2000" placeholder="Paste a WhatsApp broadcast, class rep update, or notice here…"></textarea><div class="textarea-foot"><span id="charCount">0 / 2,000</span><button class="button primary extract" id="extractText">Extract actions <span>↗</span></button></div></div>
-            <label class="upload-view hidden" id="uploadView" for="fileInput"><input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" hidden /><span class="upload-icon">↥</span><strong>Drop flyer here or browse</strong><small>PNG, JPG or WEBP · up to 10MB</small></label>
-            <div class="samples"><span>TRY A LIVE SAMPLE</span><button data-sample="exam">Exam timetable</button><button data-sample="event">Society event</button><button data-sample="revision">Postponement</button></div>
-          </div>
-        </section>
-
-        <section class="workflow" id="how"><div class="workflow-head"><div><div class="section-kicker">02 / INTELLIGENCE, WITH RECEIPTS</div><h2>A clear path from<br />notice to <em>knowing.</em></h2></div><p>AI should not invent your campus news. It should make the information already there easier to trust and act on.</p></div><div class="workflow-steps"><article><span>01</span><h3>Read</h3><p>Gemma reads text and flyers in the context of your campus.</p></article><article><span>02</span><h3>Check</h3><p>Every detail carries a source excerpt and a confidence signal.</p></article><article><span>03</span><h3>Act</h3><p>Filter what matters to you, then send it straight to your calendar.</p></article></div></section>
-
-        <section class="workspace" id="feed">
-          <aside class="sidebar"><div class="workspace-title"><span class="brand-mark small">C</span><div><small>YOUR SPACE</small><strong>LASUCOM</strong></div><button>⌄</button></div><div class="nav-label">OVERVIEW</div><a class="side-link active" href="#feed"><span>◉</span> Action feed <b id="feedCount">06</b></a><a class="side-link" href="#schedule"><span>◫</span> Calendar</a><a class="side-link" href="#"><span>⌁</span> Saved notices</a><div class="nav-label lower">FILTER BY</div><button class="filter-side active" data-filter="All"><i></i> All notices</button><button class="filter-side" data-filter="Exam"><i class="coral"></i> Exams & assessments</button><button class="filter-side" data-filter="Academic"><i class="violet"></i> Academic</button><button class="filter-side" data-filter="Event"><i class="yellow"></i> Events & opportunities</button><div class="side-bottom"><div class="signal"><i></i><span><b>SYNC IS ON</b><small>Your notices live here</small></span></div></div></aside>
-          <div class="feed-main"><div class="feed-header"><div><div class="section-kicker">YOUR ACTION FEED</div><h2>Good afternoon, Hassan.</h2><p><span class="live-dot"></span> 2 things need your attention today.</p></div><button class="button dark" id="exportAll">Export upcoming <span>↓</span></button></div><div class="feed-tools"><label class="search"><span>⌕</span><input id="searchInput" placeholder="Search notices" /></label><div class="filter-chips"><button class="chip active" data-filter="All">All</button><button class="chip" data-filter="400L">400L</button><button class="chip" data-filter="Exam">Exams</button><button class="chip" data-filter="Event">Events</button></div></div><div class="notice-banner" id="statusBanner"><span class="spark">✦</span><p><b>Sample workspace</b> — explore the feed, or turn a notice into an action above.</p><button id="dismissBanner">×</button></div><div class="timeline" id="timeline"></div></div>
-        </section>
-
-        <section class="impact" id="about"><div><div class="section-kicker">BUILT FOR CAMPUS, NOT JUST A DEMO</div><h2>The source stays<br /><em>with the story.</em></h2></div><div class="impact-copy"><p>CampusSync is a trust layer for the group chats, flyers and noticeboards students already rely on.</p><div class="metric-row"><div><strong id="parsedStat">18</strong><span>notices parsed</span></div><div><strong id="exportStat">12</strong><span>calendar exports</span></div><div><strong>0</strong><span>data sold</span></div></div></div></section>
-      </main>
-      <footer><a class="brand"><span class="brand-mark">C</span><span>campus<span>sync</span></span></a><p>Campus information, finally in sync.</p><span>LASUCOM / 2026</span></footer>
-    </div>
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <div class="modal hidden" id="demoModal"><div class="modal-card"><button class="modal-close">×</button><div class="demo-screen"><div class="scanline"></div><span class="demo-label">GEMMA 4 IS READING</span><h3>From flyer to<br />calendar in seconds.</h3><p>Source · check · action</p></div></div></div>
+    <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
